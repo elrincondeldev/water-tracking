@@ -1,7 +1,9 @@
 #include <Arduino.h>
 
+#include "config.h"
 #include "console.h"
 #include "event-detector.h"
+#include "wifi-link.h"
 #include "scale.h"
 
 namespace {
@@ -42,6 +44,8 @@ void setup() {
 
   scale.begin();
   Serial.println("# Gota node");
+  gota::beginNetwork(gota::loadConfig());
+  Serial.printf("# Device id %s\n", gota::deviceId().c_str());
   if (!scale.calibrated()) {
     Serial.println("# Not calibrated: empty the plate and send tare, then cal <grams>.");
   }
