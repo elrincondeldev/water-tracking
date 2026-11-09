@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 import type { Db } from "./db/open-database";
+import { deviceRoutes } from "./device/device-routes";
 import { goalRoutes } from "./goal/goal-routes";
 import { historyRoutes } from "./history/history-routes";
 import { apiError, errorHandler } from "./http/error-handler";
@@ -27,6 +28,7 @@ export function buildApp({ db, deviceToken, now = () => new Date(), logger = fal
   app.register(ingestRoutes, { prefix, db, deviceToken, now });
   app.register(summaryRoutes, { prefix, db, now });
   app.register(historyRoutes, { prefix, db });
+  app.register(deviceRoutes, { prefix, db, now });
   app.register(goalRoutes, { prefix, db, now });
   app.register(settingsRoutes, { prefix, db });
   return app;
