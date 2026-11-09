@@ -173,7 +173,7 @@ Done when: the scale reads a known mass within 1 g and detects sips, refills and
 - `packages/contracts` with the node protocol v1 and core API DTOs.
 - `docs/protocol.md` v1 and `docs/hardware.md` (wiring, assembly notes, calibration procedure).
 
-Done when: `pnpm check` and `pnpm test` pass locally and in CI, and the protocol doc covers every event type with examples.
+Done when: `pnpm check` and `pnpm test` pass locally and in CI, and the protocol doc covers every event type with examples. ✅
 
 ### Phase 2: API, storage and simulator
 
