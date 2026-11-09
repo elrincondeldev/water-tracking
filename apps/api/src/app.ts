@@ -9,6 +9,8 @@ import { apiError, errorHandler } from "./http/error-handler";
 import { ingestRoutes } from "./ingest/ingest-routes";
 import { intakeRoutes } from "./intakes/intake-routes";
 import { settingsRoutes } from "./settings/settings-routes";
+import { createLiveUpdates } from "./stream/live-updates";
+import { streamRoutes } from "./stream/stream-routes";
 import { summaryRoutes } from "./summary/summary-routes";
 
 export type AppOptions = {
@@ -27,13 +29,15 @@ export function buildApp({ db, deviceToken, now = () => new Date(), logger = fal
     reply.code(404).send(apiError("not_found", "Route not found")),
   );
   const prefix = "/api/v1";
-  app.register(ingestRoutes, { prefix, db, deviceToken, now });
+  const live = createLiveUpdates(db, now);
+  app.register(ingestRoutes, { prefix, db, deviceToken, now, live });
   app.register(summaryRoutes, { prefix, db, now });
   app.register(historyRoutes, { prefix, db });
   app.register(deviceRoutes, { prefix, db, now });
-  app.register(goalRoutes, { prefix, db, now });
-  app.register(settingsRoutes, { prefix, db });
-  app.register(intakeRoutes, { prefix, db, now });
-  app.register(bottleRoutes, { prefix, db, now });
+  app.register(goalRoutes, { prefix, db, now, live });
+  app.register(settingsRoutes, { prefix, db, live });
+  app.register(intakeRoutes, { prefix, db, now, live });
+  app.register(bottleRoutes, { prefix, db, now, live });
+  app.register(streamRoutes, { prefix, live });
   return app;
 }

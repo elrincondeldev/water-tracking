@@ -3,12 +3,16 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import type { Db } from "../db/open-database";
 import { goalInEffect, localDate } from "../domain/history";
 import { getSettings } from "../settings/get-settings";
+import type { LiveUpdates } from "../stream/live-updates";
 import { listGoals } from "./list-goals";
 import { putGoal } from "./put-goal";
 
-export type GoalRoutesOptions = { db: Db; now: () => Date };
+export type GoalRoutesOptions = { db: Db; now: () => Date; live: LiveUpdates };
 
-export const goalRoutes: FastifyPluginAsyncZod<GoalRoutesOptions> = async (app, { db, now }) => {
+export const goalRoutes: FastifyPluginAsyncZod<GoalRoutesOptions> = async (
+  app,
+  { db, now, live },
+) => {
   app.get("/goal", { schema: { response: { 200: goalSchema } } }, async () => {
     const today = localDate(now().toISOString(), getSettings(db).timezone);
     const goal = goalInEffect(today, listGoals(db));
@@ -19,6 +23,10 @@ export const goalRoutes: FastifyPluginAsyncZod<GoalRoutesOptions> = async (app, 
   app.put(
     "/goal",
     { schema: { body: putGoalRequestSchema, response: { 200: goalSchema } } },
-    async (request) => putGoal(db, request.body, now()),
+    async (request) => {
+      const goal = putGoal(db, request.body, now());
+      live.publishSummary();
+      return goal;
+    },
   );
 };
