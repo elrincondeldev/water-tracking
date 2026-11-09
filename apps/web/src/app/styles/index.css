@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "@gota/ui/tokens.css";
+@source "../../../../../packages/ui/src";
+
+@layer base {
+  html {
+    @apply bg-surface font-sans text-text antialiased;
+  }
+}
