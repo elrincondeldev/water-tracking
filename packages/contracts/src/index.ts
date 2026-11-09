@@ -1,3 +1,4 @@
+export * from "./api-error";
 export * from "./bottle";
 export * from "./device";
 export * from "./goal";
