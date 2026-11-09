@@ -1,0 +1,16 @@
+{
+  "name": "node-sim",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx --env-file-if-exists=../../.env src/main.ts",
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": {
+    "@gota/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4"
+  }
+}

@@ -58,6 +58,16 @@ importers:
         specifier: ^4
         version: 4.23.15
 
+  apps/node-sim:
+    dependencies:
+      '@gota/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+    devDependencies:
+      tsx:
+        specifier: ^4
+        version: 4.23.15
+
   packages/contracts:
     dependencies:
       zod:
