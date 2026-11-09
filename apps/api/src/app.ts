@@ -6,6 +6,7 @@ import { goalRoutes } from "./goal/goal-routes";
 import { historyRoutes } from "./history/history-routes";
 import { apiError, errorHandler } from "./http/error-handler";
 import { ingestRoutes } from "./ingest/ingest-routes";
+import { intakeRoutes } from "./intakes/intake-routes";
 import { settingsRoutes } from "./settings/settings-routes";
 import { summaryRoutes } from "./summary/summary-routes";
 
@@ -31,5 +32,6 @@ export function buildApp({ db, deviceToken, now = () => new Date(), logger = fal
   app.register(deviceRoutes, { prefix, db, now });
   app.register(goalRoutes, { prefix, db, now });
   app.register(settingsRoutes, { prefix, db });
+  app.register(intakeRoutes, { prefix, db, now });
   return app;
 }
