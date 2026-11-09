@@ -4,16 +4,21 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "tsx watch --env-file-if-exists=../../.env src/main.ts",
     "typecheck": "tsc -p .",
     "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@gota/contracts": "workspace:*",
     "better-sqlite3": "^13",
-    "drizzle-orm": "^0.45"
+    "drizzle-orm": "^0.45",
+    "fastify": "^5",
+    "fastify-type-provider-zod": "^7",
+    "zod": "^4"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^9",
-    "drizzle-kit": "^0.31"
+    "drizzle-kit": "^0.31",
+    "tsx": "^4"
   }
 }

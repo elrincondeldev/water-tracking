@@ -4,6 +4,7 @@
   "type": "module",
   "packageManager": "pnpm@9.12.2",
   "scripts": {
+    "dev": "pnpm -r --parallel --if-present dev",
     "check": "biome check . && tsc -p . && pnpm -r --if-present typecheck && pnpm -r --if-present lint:fsd",
     "lint": "biome check .",
     "format": "biome check --write .",
