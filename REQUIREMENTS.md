@@ -189,7 +189,7 @@ Done when: replaying the recorded sessions produces exactly the expected sips/re
 - Wi-Fi, clock from the API, event reporting, offline queue, serial configuration.
 - Delete the Arduino IDE prototypes.
 
-Done when: real drinks appear in the API within seconds, and events produced while the API is stopped arrive in order after it restarts.
+Done when: real drinks appear in the API within seconds, and events produced while the API is stopped arrive in order after it restarts. ✅
 
 ### Phase 4: web app
 
