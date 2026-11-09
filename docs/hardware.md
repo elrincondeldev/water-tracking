@@ -50,13 +50,46 @@ Opening the serial monitor resets the ESP32-S3, so expect a reboot when you conn
 
 1. **Mechanics first.** Pass the five-position test above.
 2. **Connect** at 115200 baud: `pio device monitor -b 115200`.
-3. **Tare** with the plate empty: send `t`. The node stores the current raw reading as zero. It never tares by itself at boot, because the bottle might be on the plate.
-4. **Calibrate** with a known mass, ideally close to a full bottle (e.g. a 1.5 L bottle weighed on a kitchen scale): place it, wait for the reading to settle, then send `c <grams>`, e.g. `c 1531`.
+3. **Tare** with the plate empty: send `tare`. The node stores the current raw reading as zero. It never tares by itself at boot, because the bottle might be on the plate.
+4. **Calibrate** with a known mass, ideally close to a full bottle (e.g. a 1.5 L bottle weighed on a kitchen scale): place it, wait for the reading to settle, then send `cal <grams>`, e.g. `cal 1531`. Weigh it just before: a bottle that has been drunk from is no longer the reference, and a wrong mass stores a wrong factor.
 5. **Verify:** remove and replace the mass a few times. It should read within 1 g of the reference, and the empty plate should return to 0 ± 1 g.
 
 Re-tare whenever the empty plate drifts more than a few grams; re-calibrate after any mechanical change.
 
-The commands above are those of the Phase 0 prototype sketches (`firmware/gota_diagnostico`, `firmware/gota_seguimiento`). Phase 3 ports them to the PlatformIO firmware and updates this section if anything changes.
+## Flashing and setup
+
+PlatformIO's Homebrew build may run on a Python that pioarduino rejects (it needs 3.10–3.14). If `pio run` complains, run it through uv: `uvx --python 3.14 --from platformio pio …`, or install it with `uv tool install --python 3.14 platformio`.
+
+```bash
+pio run -d firmware -t upload          # build and flash
+pio device monitor -b 115200           # console
+```
+
+Then configure the node from the console and reboot:
+
+```
+set wifi.ssid <network>
+set wifi.pass <password>
+set api.url http://<api host>:3000
+set api.token <GOTA_DEVICE_TOKEN from .env>
+reboot
+```
+
+Settings live in NVS, never in the source tree. `config` lists them with secrets hidden.
+
+## Console
+
+| Command | Effect |
+|---|---|
+| `status` | Weight, stability, presence, calibration, device id, Wi-Fi and RSSI as one JSON line. |
+| `tare` | Store the empty-plate zero. Refused while a bottle is on the plate. |
+| `cal <grams>` | Calibrate with a known mass on the plate. Needs a tare first. |
+| `live` | Toggle one weight reading per second. |
+| `config` | Show the settings, secrets hidden. |
+| `set <key> <value>` | Store `wifi.ssid`, `wifi.pass`, `api.url` or `api.token`. |
+| `reboot` | Restart to apply settings. |
+
+Every event the node reports is also printed as a JSON line, exactly as it is queued for the API. Lines starting with `#` are for people.
 
 ## Reference measurements (Phase 0)
 
