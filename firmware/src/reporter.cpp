@@ -22,11 +22,29 @@ struct Reporter {
   Config config;
   EventQueue& queue;
   WallClock& clock;
+  uint64_t boot_first_seq;
   Backoff backoff;
   bool failing = false;
 };
 
 enum class SendResult { Ok, Failed };
+
+// Before the first batch after boot, any API response's Date header sets the clock, so the
+// events queued since boot can be sent with their real time.
+SendResult syncClock(Reporter& reporter) {
+  HTTPClient http;
+  if (!http.begin(reporter.config.api_url + "/api/v1/settings")) return SendResult::Failed;
+  http.setTimeout(kHttpTimeoutMs);
+  const char* headers[] = {"Date"};
+  http.collectHeaders(headers, 1);
+  const int status = http.GET();
+  const String date = http.header("Date");
+  http.end();
+  const auto unix_ms = status > 0 ? parseHttpDateMs(date.c_str()) : std::nullopt;
+  if (!unix_ms) return SendResult::Failed;
+  reporter.clock.sync(*unix_ms, uptimeMs());
+  return SendResult::Ok;
+}
 
 SendResult send(Reporter& reporter, const std::vector<std::string>& events) {
   HTTPClient http;
@@ -64,7 +82,15 @@ void run(void* parameter) {
       vTaskDelay(pdMS_TO_TICKS(kIdlePollMs));
       continue;
     }
-    if (send(reporter, reporter.queue.peek(kBatchMax)) == SendResult::Ok) {
+    if (!reporter.clock.synced() && syncClock(reporter) == SendResult::Failed) {
+      vTaskDelay(pdMS_TO_TICKS(reporter.backoff.nextDelayMs()));
+      continue;
+    }
+    std::vector<std::string> events = reporter.queue.peek(kBatchMax);
+    for (std::string& event : events) {
+      event = withKnownTime(event, reporter.boot_first_seq, reporter.clock);
+    }
+    if (send(reporter, events) == SendResult::Ok) {
       reporter.backoff.reset();
     } else {
       vTaskDelay(pdMS_TO_TICKS(reporter.backoff.nextDelayMs()));
@@ -74,12 +100,13 @@ void run(void* parameter) {
 
 }  // namespace
 
-void startReporter(const Config& config, EventQueue& queue, WallClock& clock) {
+void startReporter(const Config& config, EventQueue& queue, WallClock& clock,
+                   uint64_t boot_first_seq) {
   if (config.api_url.isEmpty() || config.api_token.isEmpty()) {
     Serial.println("# API not configured: set api.url and api.token, then reboot.");
     return;
   }
-  static Reporter reporter{config, queue, clock};
+  static Reporter reporter{config, queue, clock, boot_first_seq};
   xTaskCreatePinnedToCore(run, "reporter", kTaskStackBytes, &reporter, 1, nullptr, 0);
 }
 

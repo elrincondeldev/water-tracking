@@ -6,6 +6,7 @@
 
 namespace gota {
 
-void startReporter(const Config& config, EventQueue& queue, WallClock& clock);
+void startReporter(const Config& config, EventQueue& queue, WallClock& clock,
+                   uint64_t boot_first_seq);
 
 }  // namespace gota

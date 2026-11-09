@@ -7,7 +7,12 @@ namespace gota {
 
 namespace {
 
+// The driver's auto-reconnect gives up after some failures, e.g. right after a reboot.
+constexpr uint32_t kReconnectAfterMs = 30000;
+
 String device_id;
+Config wifi_config;
+uint32_t last_attempt_ms = 0;
 uint8_t last_disconnect_reason = 0;
 
 void logWifiEvent(WiFiEvent_t event, WiFiEventInfo_t info) {
@@ -45,8 +50,22 @@ void beginNetwork(const Config& config) {
     Serial.println("# Wi-Fi not configured: set wifi.ssid and wifi.pass, then reboot.");
     return;
   }
+  wifi_config = config;
+  last_attempt_ms = millis();
   WiFi.begin(config.wifi_ssid.c_str(), config.wifi_pass.c_str());
   Serial.printf("# Connecting to Wi-Fi \"%s\"\n", config.wifi_ssid.c_str());
+}
+
+void maintainNetwork(uint32_t now_ms) {
+  if (wifi_config.wifi_ssid.isEmpty() || networkConnected()) {
+    last_attempt_ms = now_ms;
+    return;
+  }
+  if (now_ms - last_attempt_ms < kReconnectAfterMs) return;
+  last_attempt_ms = now_ms;
+  Serial.println("# Wi-Fi still down; retrying");
+  WiFi.disconnect();
+  WiFi.begin(wifi_config.wifi_ssid.c_str(), wifi_config.wifi_pass.c_str());
 }
 
 bool networkConnected() { return WiFi.status() == WL_CONNECTED; }

@@ -13,6 +13,8 @@ class WallClock {
     synced_.store(true);
   }
 
+  bool synced() const { return synced_.load(); }
+
   std::optional<uint64_t> at(uint64_t uptime_ms) const {
     if (!synced_.load()) return std::nullopt;
     return static_cast<uint64_t>(offset_ms_.load() + static_cast<int64_t>(uptime_ms));
