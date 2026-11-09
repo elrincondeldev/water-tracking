@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>Gota</title>
+  <rect width="512" height="512" fill="#0284c7"/>
+  <g transform="translate(133 104) scale(1.23)">
+    <path d="M100 8 C100 8 28 104 28 164 A72 72 0 0 0 172 164 C172 104 100 8 100 8 Z" fill="#ffffff"/>
+    <path d="M28 164 Q 64 152 100 164 T 172 164 A72 72 0 0 1 28 164 Z" fill="#7dd3fc"/>
+  </g>
+</svg>
