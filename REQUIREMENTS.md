@@ -214,6 +214,10 @@ Done when: a fresh ZimaBoard can be set up from the guide alone and a backup res
 
 ## 9. Open questions
 
-- Should the web app be installable as a PWA for the phone home screen?
 - Apple Health export: out of scope for now; revisit after Phase 5.
-- Bottle profiles (known empty weight per bottle) would allow showing "ml left in bottle". Decide in Phase 4.
+- HTTPS on the LAN. Browsers only run service workers on secure origins, so over `http://<host>:8080` the PWA can't install or work offline (it does on `localhost`). Deferred; a local-CA proxy such as Caddy is the likely answer.
+
+Decided in Phase 4:
+
+- The web app is a full PWA: manifest, icons and a service worker that keeps the last API data readable offline.
+- No bottle profiles for now: without an empty weight per bottle the app can't show "ml left in bottle", and that's acceptable.

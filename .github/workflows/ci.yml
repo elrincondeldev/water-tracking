@@ -31,6 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - run: docker build -f apps/api/Dockerfile -t gota-api .
+      - run: docker build -f apps/web/Dockerfile -t gota-web .
 
   firmware:
     runs-on: ubuntu-latest
