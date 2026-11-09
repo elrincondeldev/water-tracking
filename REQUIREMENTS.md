@@ -196,7 +196,7 @@ Done when: real drinks appear in the API within seconds, and events produced whi
 - Today, History, Bottle, Review and Settings screens with live updates.
 - Served by the `web` container.
 
-Done when: every action in section 5.3 works against the API with the real node or node-sim, in light and dark mode, on desktop and phone widths.
+Done when: every action in section 5.3 works against the API with the real node or node-sim, in light and dark mode, on desktop and phone widths. ✅
 
 ### Phase 5: macOS menu bar app
 
