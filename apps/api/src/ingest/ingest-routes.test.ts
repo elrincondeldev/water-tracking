@@ -32,6 +32,11 @@ describe("POST /api/v1/node/events", () => {
     expect(response.json()).toEqual({ v: 1, accepted_seq: events[4]?.seq });
   });
 
+  it("sends a Date header the node can set its clock from", async () => {
+    const response = await post(body);
+    expect(Number.isNaN(Date.parse(String(response.headers.date)))).toBe(false);
+  });
+
   it.each([
     ["no token", null],
     ["a wrong token", "Bearer not-the-token"],

@@ -39,7 +39,7 @@ Fields common to every event:
 |---|---|---|
 | `seq` | integer ≥ 1 | Per-device counter, persisted in NVS, never reused. |
 | `type` | string | One of `placed`, `removed`, `changed`, `status`. |
-| `t_ms` | integer or `null` | Unix time in ms when the event happened. `null` if NTP has not synced since boot. |
+| `t_ms` | integer or `null` | Unix time in ms when the event happened. `null` if the clock has not been set since boot (see [Clock](#clock)). |
 | `uptime_ms` | integer ≥ 0 | Milliseconds since boot when the event happened. Lets the API order and date events whose `t_ms` is `null`. |
 
 Weights are grams, rounded to 0.1 g, and come from the calibrated scale (mean of the stability window).
@@ -105,6 +105,10 @@ Periodic heartbeat, every 60 s. Describes the node, not a weight change, so the 
   "queued": 0
 }
 ```
+
+## Clock
+
+The node has no NTP: it sets its clock from the `Date` header of every `200` response to this endpoint, which the API must send. Until the first response after boot, events carry `t_ms: null` and the API dates them from `uptime_ms`. The header has one-second precision, which is enough for drinks.
 
 ## Response
 
