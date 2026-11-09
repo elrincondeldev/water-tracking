@@ -22,3 +22,5 @@ apps/desktop/src-tauri/target/
 
 .claude/settings.local.json
 .DS_Store
+
+.local/
