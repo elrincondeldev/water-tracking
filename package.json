@@ -8,7 +8,7 @@
     "check": "biome check . && tsc -p . && pnpm -r --if-present typecheck && pnpm -r --if-present lint:fsd",
     "lint": "biome check .",
     "format": "biome check --write .",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run"
   },
   "engines": {
     "node": ">=24"
