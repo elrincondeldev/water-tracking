@@ -64,7 +64,7 @@ API side (domain logic, pure and unit-tested):
 - Compare each `placed`/`changed` weight with the last baseline of the active bottle.
 - Drop of 5–600 g → **sip** of that many ml (1 g of water = 1 ml).
 - Rise ≥ 5 g → **refill** (not counted).
-- Drop > 600 g → **unclassified**: shown in the web app to confirm as drink or discard.
+- Drop > 600 g → **unclassified**: stays `pending` and is shown in the web app to confirm as drink or discard.
 - Change < 5 g → no event.
 - The new weight becomes the baseline.
 - A **bottle reset** clears the baseline: the next placement starts counting from scratch without producing an intake.
@@ -134,7 +134,7 @@ Thresholds live in one config module in each side and are covered by tests using
 | `devices` | id, name, token hash, firmware version, last seen |
 | `node_events` | append-only raw events: device, seq, type, weight_g, measured_at, received_at |
 | `bottles` | id, name, capacity_ml, started_at, ended_at |
-| `intakes` | derived or manual: kind (`sip`, `refill`, `unclassified`, `manual`), volume_ml, bottle, source event, occurred_at, status (`counted`, `discarded`) |
+| `intakes` | derived or manual: kind (`sip`, `refill`, `unclassified`, `manual`), volume_ml, bottle, source event, occurred_at, status (`pending` until an unclassified drop is reviewed, then `counted` or `discarded`) |
 | `goals` | daily_ml, effective_from |
 | `settings` | timezone, reminder rules, quiet hours |
 
