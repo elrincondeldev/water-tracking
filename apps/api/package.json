@@ -4,9 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "typecheck": "tsc -p ."
+    "typecheck": "tsc -p .",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
-    "@gota/contracts": "workspace:*"
+    "@gota/contracts": "workspace:*",
+    "better-sqlite3": "^13",
+    "drizzle-orm": "^0.45"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9",
+    "drizzle-kit": "^0.31"
   }
 }

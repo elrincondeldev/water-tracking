@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!.agents", "!.claude", "!skills-lock.json", "!**/*.md"]
+    "includes": ["**", "!.agents", "!.claude", "!skills-lock.json", "!**/*.md", "!apps/api/drizzle"]
   },
   "formatter": {
     "indentStyle": "space",
