@@ -88,6 +88,7 @@ void loop() {
   gota::pollConsole(console);
 
   const uint32_t now_ms = millis();
+  gota::maintainNetwork(now_ms);
   if (now_ms - last_heartbeat_ms >= kHeartbeatMs) {
     last_heartbeat_ms = now_ms;
     reportStatus();
