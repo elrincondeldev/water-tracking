@@ -38,7 +38,13 @@ describe("historyQuerySchema", () => {
       from: "2026-11-01",
       to: "2026-11-09",
       granularity: "day",
+      intakes: true,
     });
+  });
+
+  it("can leave the intakes out", () => {
+    const query = { from: "2025-11-10", to: "2026-11-09", intakes: "false" };
+    expect(historyQuerySchema.parse(query).intakes).toBe(false);
   });
 
   it("accepts a single day", () => {

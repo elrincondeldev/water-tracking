@@ -9,7 +9,8 @@ import { getSettings } from "../settings/get-settings";
 export function getTodaySummary(db: DbOrTx, now: Date): TodaySummary {
   const { timezone } = getSettings(db);
   const date = localDate(now.toISOString(), timezone);
-  const today = getHistory(db, { from: date, to: date, granularity: "day" }).buckets[0];
+  const today = getHistory(db, { from: date, to: date, granularity: "day", intakes: false })
+    .buckets[0];
   const total_ml = today?.total_ml ?? 0;
   const goal_ml = today?.goal_ml ?? 0;
   const tracker = loadTrackerState(db);

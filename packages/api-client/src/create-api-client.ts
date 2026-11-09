@@ -28,7 +28,12 @@ export type ApiClientOptions = {
   fetch?: typeof globalThis.fetch;
 };
 
-export type HistoryParams = { from: string; to: string; granularity?: HistoryGranularity };
+export type HistoryParams = {
+  from: string;
+  to: string;
+  granularity?: HistoryGranularity;
+  intakes?: boolean;
+};
 
 export type ApiClient = ReturnType<typeof createApiClient>;
 
@@ -51,11 +56,16 @@ export function createApiClient({ baseUrl = "", fetch = globalThis.fetch }: ApiC
   return {
     getTodaySummary: (): Promise<TodaySummary> => json(todaySummarySchema, "GET", "/summary/today"),
 
-    getHistory: ({ from, to, granularity = "day" }: HistoryParams): Promise<HistoryResponse> =>
+    getHistory: ({
+      from,
+      to,
+      granularity = "day",
+      intakes = true,
+    }: HistoryParams): Promise<HistoryResponse> =>
       json(
         historyResponseSchema,
         "GET",
-        `/history?${new URLSearchParams({ from, to, granularity })}`,
+        `/history?${new URLSearchParams({ from, to, granularity, intakes: String(intakes) })}`,
       ),
 
     getDevice: async (): Promise<Device | null> => {
