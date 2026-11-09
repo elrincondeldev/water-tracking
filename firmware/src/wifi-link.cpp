@@ -8,6 +8,20 @@ namespace gota {
 namespace {
 
 String device_id;
+uint8_t last_disconnect_reason = 0;
+
+void logWifiEvent(WiFiEvent_t event, WiFiEventInfo_t info) {
+  if (event == ARDUINO_EVENT_WIFI_STA_GOT_IP) {
+    last_disconnect_reason = 0;
+    Serial.printf("# Wi-Fi connected, IP %s\n", IPAddress(info.got_ip.ip_info.ip.addr).toString().c_str());
+  } else if (event == ARDUINO_EVENT_WIFI_STA_DISCONNECTED) {
+    const uint8_t reason = info.wifi_sta_disconnected.reason;
+    if (reason == last_disconnect_reason) return;
+    last_disconnect_reason = reason;
+    Serial.printf("# Wi-Fi disconnected: %s (reason %u)\n",
+                  WiFi.disconnectReasonName(static_cast<wifi_err_reason_t>(reason)), reason);
+  }
+}
 
 String macDeviceId() {
   uint8_t mac[6];
@@ -25,6 +39,7 @@ void beginNetwork(const Config& config) {
   device_id = macDeviceId();
   WiFi.setHostname(device_id.c_str());
   WiFi.setAutoReconnect(true);
+  WiFi.onEvent(logWifiEvent);
   if (config.wifi_ssid.isEmpty()) {
     Serial.println("# Wi-Fi not configured: set wifi.ssid and wifi.pass, then reboot.");
     return;
