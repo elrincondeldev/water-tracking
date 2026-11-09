@@ -11,6 +11,7 @@
     "start": "node --env-file-if-exists=../../.env dist/main.js"
   },
   "dependencies": {
+    "@fastify/cors": "^11",
     "@gota/contracts": "workspace:*",
     "better-sqlite3": "^13",
     "drizzle-orm": "^0.45",

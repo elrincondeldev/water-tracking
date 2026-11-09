@@ -1,3 +1,4 @@
+import cors from "@fastify/cors";
 import Fastify from "fastify";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 import { bottleRoutes } from "./bottle/bottle-routes";
@@ -13,6 +14,13 @@ import { createLiveUpdates } from "./stream/live-updates";
 import { streamRoutes } from "./stream/stream-routes";
 import { summaryRoutes } from "./summary/summary-routes";
 
+// The macOS app's webview: bundled (macOS uses tauri://, other platforms the http form) and dev.
+export const DESKTOP_ORIGINS = [
+  "tauri://localhost",
+  "http://tauri.localhost",
+  "http://localhost:1420",
+];
+
 export type AppOptions = {
   db: Db;
   deviceToken: string;
@@ -24,6 +32,7 @@ export function buildApp({ db, deviceToken, now = () => new Date(), logger = fal
   const app = Fastify({ logger });
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
+  app.register(cors, { origin: DESKTOP_ORIGINS });
   app.setErrorHandler(errorHandler);
   app.setNotFoundHandler((_request, reply) =>
     reply.code(404).send(apiError("not_found", "Route not found")),
