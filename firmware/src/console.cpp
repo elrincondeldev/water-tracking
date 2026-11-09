@@ -20,6 +20,7 @@ void printHelp() {
   Serial.println("#   config       show settings (secrets hidden)");
   Serial.println("#   set <key> <value>  wifi.ssid, wifi.pass, api.url or api.token");
   Serial.println("#   reboot       restart to apply settings");
+  Serial.println("#   scan         list the 2.4 GHz networks the node can see");
   Serial.println("#   help         this list");
 }
 
@@ -94,6 +95,10 @@ void handle(ConsoleContext& ctx, String command) {
     return printConfig(loadConfig());
   }
   if (command.startsWith("set ")) return set(command.substring(4));
+  if (command == "scan") {
+    Serial.println("# Scanning...");
+    return printNetworkScan();
+  }
   if (command == "reboot") {
     Serial.println("# Rebooting.");
     Serial.flush();

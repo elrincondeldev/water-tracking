@@ -4,7 +4,7 @@ Gota: a self-hosted smart coaster that tracks how much water one person drinks. 
 
 `REQUIREMENTS.md` is the source of truth for scope, architecture and roadmap. Read the relevant section before starting a task. `docs/protocol.md` is the source of truth for the node ↔ API contract.
 
-**Current phase:** 3 (update this line as phases complete). Don't build anything that belongs to a later phase.
+**Current phase:** 4 (update this line as phases complete). Don't build anything that belongs to a later phase.
 
 ## Layout
 
