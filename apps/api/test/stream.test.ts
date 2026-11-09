@@ -11,7 +11,9 @@ async function openStream() {
   ctx = testApp();
   await ctx.app.listen({ host: "127.0.0.1", port: 0 });
   const { port } = ctx.app.server.address() as AddressInfo;
-  const response = await fetch(`http://127.0.0.1:${port}/api/v1/stream`);
+  const response = await fetch(`http://127.0.0.1:${port}/api/v1/stream`, {
+    headers: { origin: "tauri://localhost" },
+  });
   const reader = response.body?.getReader();
   const decoder = new TextDecoder();
   if (!reader) throw new Error("no stream body");
@@ -44,6 +46,7 @@ describe("GET /api/v1/stream", () => {
   it("starts with the current summary", async () => {
     const { response, next } = await openStream();
     expect(response.headers.get("content-type")).toBe("text/event-stream");
+    expect(response.headers.get("access-control-allow-origin")).toBe("tauri://localhost");
     const [first] = await next(1);
     expect(first?.type).toBe("summary");
   });
