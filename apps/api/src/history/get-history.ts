@@ -17,6 +17,6 @@ export function getHistory(db: DbOrTx, query: HistoryQuery): HistoryResponse {
     timezone,
     granularity: query.granularity,
     buckets: buildHistoryBuckets({ ...query, timezone, intakes, goals: listGoals(db) }),
-    intakes,
+    intakes: query.intakes ? intakes : [],
   };
 }

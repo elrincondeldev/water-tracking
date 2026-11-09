@@ -21,6 +21,7 @@ export const historyQuerySchema = z
     from: isoDateSchema,
     to: isoDateSchema,
     granularity: historyGranularitySchema.default("day"),
+    intakes: z.stringbool().default(true),
   })
   .refine((query) => query.from <= query.to, { message: "from must not be after to" });
 

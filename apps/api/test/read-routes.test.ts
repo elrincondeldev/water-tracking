@@ -62,6 +62,12 @@ describe("GET /api/v1/history", () => {
     expect(body.intakes.map((i: { kind: string }) => i.kind)).toEqual(["sip", "sip", "refill"]);
   });
 
+  it("leaves the intakes out on request", async () => {
+    const { get } = await withSession();
+    const { body } = await get("/api/v1/history?from=2026-11-09&to=2026-11-09&intakes=false");
+    expect([body.buckets[0].total_ml, body.intakes]).toEqual([428, []]);
+  });
+
   it("rejects an inverted range", async () => {
     ctx = testApp();
     const { status, body } = await ctx.get("/api/v1/history?from=2026-11-09&to=2026-11-01");

@@ -45,7 +45,9 @@ describe("createApiClient", () => {
       intakes: [],
     });
     await createApiClient({ fetch }).getHistory({ from: "2026-11-01", to: "2026-11-09" });
-    expect(calls[0]?.url).toBe("/api/v1/history?from=2026-11-01&to=2026-11-09&granularity=day");
+    expect(calls[0]?.url).toBe(
+      "/api/v1/history?from=2026-11-01&to=2026-11-09&granularity=day&intakes=true",
+    );
   });
 
   it("sends JSON bodies for writes", async () => {
