@@ -15,10 +15,13 @@ export function countsTowardTotal(intake: Pick<Intake, "kind" | "status">): bool
   return intake.status === "counted" && intake.kind !== "refill";
 }
 
-export function goalOn(date: string, goals: Goal[]): number {
+export function goalInEffect(date: string, goals: Goal[]): Goal | undefined {
   const sorted = goals.toSorted((a, b) => a.effective_from.localeCompare(b.effective_from));
-  const inEffect = sorted.findLast((goal) => goal.effective_from <= date) ?? sorted[0];
-  return inEffect?.daily_ml ?? 0;
+  return sorted.findLast((goal) => goal.effective_from <= date) ?? sorted[0];
+}
+
+export function goalOn(date: string, goals: Goal[]): number {
+  return goalInEffect(date, goals)?.daily_ml ?? 0;
 }
 
 export function buildHistoryBuckets(input: {
