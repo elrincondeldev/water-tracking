@@ -38,7 +38,7 @@ A working prototype exists and was tested with a real 1.5 L bottle on 2026-11-09
 | Position error | ±2 g across center/front/back/left/right |
 | Empty plate after lifts | 0 ± 0.6 g |
 
-The prototype sketches in `firmware/gota_diagnostico/` and `firmware/gota_seguimiento/` predate the repo, are written in Spanish and use the Arduino IDE layout. Phase 3 replaces them with the PlatformIO project and deletes them.
+The prototype sketches predated the repo, were written in Spanish and used the Arduino IDE layout. Phase 3 replaced them with the PlatformIO project in `firmware/`.
 
 Lessons learned:
 
