@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "tsx watch --env-file-if-exists=../../.env src/main.ts",
     "typecheck": "tsc -p .",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "build": "node build.mjs",
+    "start": "node --env-file-if-exists=../../.env dist/main.js"
   },
   "dependencies": {
     "@gota/contracts": "workspace:*",
@@ -19,6 +21,7 @@
   "devDependencies": {
     "@types/better-sqlite3": "^9",
     "drizzle-kit": "^0.31",
+    "esbuild": "^0.28",
     "node-sim": "workspace:^",
     "tsx": "^4"
   }
