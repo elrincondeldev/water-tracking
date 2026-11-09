@@ -1,9 +1,10 @@
-import { goalSchema } from "@gota/contracts";
+import { goalSchema, putGoalRequestSchema } from "@gota/contracts";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import type { Db } from "../db/open-database";
 import { goalInEffect, localDate } from "../domain/history";
 import { getSettings } from "../settings/get-settings";
 import { listGoals } from "./list-goals";
+import { putGoal } from "./put-goal";
 
 export type GoalRoutesOptions = { db: Db; now: () => Date };
 
@@ -14,4 +15,10 @@ export const goalRoutes: FastifyPluginAsyncZod<GoalRoutesOptions> = async (app, 
     if (!goal) throw new Error("no goal; ensureDefaults must run at startup");
     return goal;
   });
+
+  app.put(
+    "/goal",
+    { schema: { body: putGoalRequestSchema, response: { 200: goalSchema } } },
+    async (request) => putGoal(db, request.body, now()),
+  );
 };
