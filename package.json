@@ -4,6 +4,7 @@
   "type": "module",
   "packageManager": "pnpm@9.12.2",
   "scripts": {
+    "check": "biome check . && tsc -p . && pnpm -r --if-present typecheck && pnpm -r --if-present lint:fsd",
     "lint": "biome check .",
     "format": "biome check --write .",
     "test": "vitest run --passWithNoTests"
@@ -13,7 +14,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2",
+    "@feature-sliced/steiger-plugin": "^0.8",
     "@types/node": "^24",
+    "steiger": "^0.10",
     "typescript": "^7",
     "vitest": "^5"
   }
