@@ -46,7 +46,7 @@ describe("ingestBatch", () => {
     const events = loadEvents("sips-and-refill");
     const first = ingestBatch(db, batch(events.slice(0, 10)), RECEIVED_AT);
     const again = ingestBatch(db, batch(events.slice(0, 10)), RECEIVED_AT);
-    expect(again).toEqual({ accepted_seq: first.accepted_seq, intakes: [] });
+    expect(again).toEqual({ accepted_seq: first.accepted_seq, intakes: [], gaps: [] });
     expect(db.select().from(nodeEvents).all()).toHaveLength(10);
   });
 
