@@ -1,3 +1,4 @@
+export { formatAgo, formatGrams, formatMl, formatTime, todayIn } from "@gota/ui";
 export {
   addDays,
   addMonths,
@@ -6,6 +7,5 @@ export {
   startOfMonth,
   startOfWeek,
 } from "./dates";
-export { formatAgo, formatGrams, formatMl, formatTime, todayIn } from "./format";
 export { useNow } from "./use-now";
 export { useOnline } from "./use-online";
