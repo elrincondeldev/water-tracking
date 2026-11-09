@@ -74,6 +74,15 @@ importers:
         specifier: ^4
         version: 4.23.15
 
+  packages/api-client:
+    dependencies:
+      '@gota/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      zod:
+        specifier: ^4
+        version: 4.6.7
+
   packages/contracts:
     dependencies:
       zod:
