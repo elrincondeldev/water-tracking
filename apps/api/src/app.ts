@@ -6,6 +6,7 @@ import { historyRoutes } from "./history/history-routes";
 import { apiError, errorHandler } from "./http/error-handler";
 import { ingestRoutes } from "./ingest/ingest-routes";
 import { settingsRoutes } from "./settings/settings-routes";
+import { summaryRoutes } from "./summary/summary-routes";
 
 export type AppOptions = {
   db: Db;
@@ -24,6 +25,7 @@ export function buildApp({ db, deviceToken, now = () => new Date(), logger = fal
   );
   const prefix = "/api/v1";
   app.register(ingestRoutes, { prefix, db, deviceToken, now });
+  app.register(summaryRoutes, { prefix, db, now });
   app.register(historyRoutes, { prefix, db });
   app.register(goalRoutes, { prefix, db, now });
   app.register(settingsRoutes, { prefix, db });
