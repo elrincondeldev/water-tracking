@@ -1,0 +1,12 @@
+{"seq":1,"type":"placed","t_ms":1794225627000,"uptime_ms":27000,"weight_g":1531.0}
+{"seq":2,"type":"removed","t_ms":1794225643400,"uptime_ms":43400}
+{"seq":3,"type":"placed","t_ms":1794225657700,"uptime_ms":57700,"weight_g":1529.4}
+{"seq":4,"type":"removed","t_ms":1794225673400,"uptime_ms":73400}
+{"seq":5,"type":"placed","t_ms":1794225686100,"uptime_ms":86100,"weight_g":1532.5}
+{"seq":6,"type":"removed","t_ms":1794225704000,"uptime_ms":104000}
+{"seq":7,"type":"placed","t_ms":1794225715600,"uptime_ms":115600,"weight_g":1530.8}
+{"seq":8,"type":"removed","t_ms":1794225735900,"uptime_ms":135900}
+{"seq":9,"type":"placed","t_ms":1794225747100,"uptime_ms":147100,"weight_g":1533.1}
+{"seq":10,"type":"removed","t_ms":1794225755900,"uptime_ms":155900}
+{"seq":11,"type":"placed","t_ms":1794225768700,"uptime_ms":168700,"weight_g":1530.7}
+{"seq":12,"type":"removed","t_ms":1794225788100,"uptime_ms":188100}

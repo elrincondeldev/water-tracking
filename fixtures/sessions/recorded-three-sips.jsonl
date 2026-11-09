@@ -1,0 +1,7 @@
+{"seq":1,"type":"placed","t_ms":1794225611500,"uptime_ms":11500,"weight_g":1531.0}
+{"seq":2,"type":"removed","t_ms":1794225628500,"uptime_ms":28500}
+{"seq":3,"type":"placed","t_ms":1794225642500,"uptime_ms":42500,"weight_g":1451.8}
+{"seq":4,"type":"removed","t_ms":1794225660400,"uptime_ms":60400}
+{"seq":5,"type":"placed","t_ms":1794225675000,"uptime_ms":75000,"weight_g":1379.5}
+{"seq":6,"type":"removed","t_ms":1794225701900,"uptime_ms":101900}
+{"seq":7,"type":"placed","t_ms":1794225718300,"uptime_ms":118300,"weight_g":1243.3}
