@@ -23,7 +23,10 @@ export const ingestRoutes: FastifyPluginAsyncZod<IngestRoutesOptions> = async (a
       },
     },
     async (request) => {
-      const { accepted_seq } = ingestBatch(options.db, request.body, options.now());
+      const { accepted_seq, gaps } = ingestBatch(options.db, request.body, options.now());
+      for (const gap of gaps) {
+        request.log.warn({ device_id: request.body.device_id, ...gap }, "missing node events");
+      }
       return { v: NODE_PROTOCOL_VERSION, accepted_seq } satisfies NodeEventBatchAck;
     },
   );

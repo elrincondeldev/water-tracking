@@ -5,9 +5,10 @@ import { bottles, devices, intakes, nodeEvents } from "../db/schema";
 import { toIntake } from "../db/to-intake";
 import { getActiveBottle, loadTrackerState } from "../db/tracker-state";
 import { applyNodeEvent } from "../domain/bottle-tracker";
+import { findSeqGaps, type SeqGap } from "../domain/find-seq-gaps";
 import { resolveMeasuredAt } from "../domain/resolve-measured-at";
 
-export type IngestResult = { accepted_seq: number; intakes: Intake[] };
+export type IngestResult = { accepted_seq: number; intakes: Intake[]; gaps: SeqGap[] };
 
 export function ingestBatch(db: Db, batch: NodeEventBatch, receivedAt: Date): IngestResult {
   return db.transaction((tx) => {
@@ -43,7 +44,14 @@ export function ingestBatch(db: Db, batch: NodeEventBatch, receivedAt: Date): In
 
     tx.update(bottles).set({ baseline_g: state.baseline_g }).where(eq(bottles.id, bottle.id)).run();
     const lastSeq = batch.events.at(-1)?.seq ?? 0;
-    return { accepted_seq: Math.max(storedSeq, lastSeq), intakes: created };
+    return {
+      accepted_seq: Math.max(storedSeq, lastSeq),
+      intakes: created,
+      gaps: findSeqGaps(
+        storedSeq,
+        batch.events.map((event) => event.seq),
+      ),
+    };
   });
 }
 
