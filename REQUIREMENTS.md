@@ -181,7 +181,7 @@ Done when: `pnpm check` and `pnpm test` pass locally and in CI, and the protocol
 - `apps/node-sim` replaying `fixtures/sessions` (including the Phase 0 test sessions).
 - Dockerfile for the API and `docker-compose.yml`.
 
-Done when: replaying the recorded sessions produces exactly the expected sips/refills in tests, and `docker compose up` exposes a working API.
+Done when: replaying the recorded sessions produces exactly the expected sips/refills in tests, and `docker compose up` exposes a working API. ✅
 
 ### Phase 3: firmware node
 
