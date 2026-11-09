@@ -1,0 +1,6 @@
+{"seq":1,"type":"placed","t_ms":null,"uptime_ms":6000,"weight_g":1531}
+{"seq":2,"type":"removed","t_ms":null,"uptime_ms":36000}
+{"seq":3,"type":"placed","t_ms":1794225644000,"uptime_ms":44000,"weight_g":1400}
+{"seq":4,"type":"status","t_ms":1794225660000,"uptime_ms":60000,"weight_g":1400,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":5,"type":"removed","t_ms":1794225714000,"uptime_ms":114000}
+{"seq":6,"type":"placed","t_ms":1794225720000,"uptime_ms":120000,"weight_g":1250.3}
