@@ -10,5 +10,6 @@ void beginNetwork(const Config& config);
 bool networkConnected();
 int networkRssiDbm();
 const String& deviceId();
+void printNetworkScan();
 
 }  // namespace gota
