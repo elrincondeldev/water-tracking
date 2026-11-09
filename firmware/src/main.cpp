@@ -77,7 +77,7 @@ void setup() {
 
   const gota::Config config = gota::loadConfig();
   gota::beginNetwork(config);
-  gota::startReporter(config, queue, wall_clock);
+  gota::startReporter(config, queue, wall_clock, next_seq);
   Serial.printf("# Device id %s, next seq %llu, %u events queued\n", gota::deviceId().c_str(),
                 static_cast<unsigned long long>(next_seq), static_cast<unsigned>(queue.size()));
   Serial.println("# Send help for commands.");

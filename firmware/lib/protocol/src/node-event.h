@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "wall-clock.h"
+
 namespace gota {
 
 struct StatusFields {
@@ -29,5 +31,7 @@ std::string buildBatch(const std::string& device_id, const std::string& firmware
                        const std::vector<std::string>& events);
 std::optional<uint64_t> parseSeq(const std::string& event_json);
 std::optional<uint64_t> parseAcceptedSeq(const std::string& ack_json);
+std::string withKnownTime(const std::string& event_json, uint64_t boot_first_seq,
+                          const WallClock& clock);
 
 }  // namespace gota

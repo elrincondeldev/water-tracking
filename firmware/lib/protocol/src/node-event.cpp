@@ -71,4 +71,19 @@ std::optional<uint64_t> parseAcceptedSeq(const std::string& ack_json) {
   return readUnsigned(ack_json, "accepted_seq");
 }
 
+// Events queued before the clock was set get their time once it is, but only if they come
+// from the current boot: uptime from an earlier boot says nothing about today's clock.
+std::string withKnownTime(const std::string& event_json, uint64_t boot_first_seq,
+                          const WallClock& clock) {
+  JsonDocument doc;
+  if (deserializeJson(doc, event_json) != DeserializationError::Ok) return event_json;
+  if (!doc["t_ms"].isNull() || doc["seq"].as<uint64_t>() < boot_first_seq) return event_json;
+  const auto t_ms = clock.at(doc["uptime_ms"].as<uint64_t>());
+  if (!t_ms) return event_json;
+  doc["t_ms"] = *t_ms;
+  std::string out;
+  serializeJson(doc, out);
+  return out;
+}
+
 }  // namespace gota

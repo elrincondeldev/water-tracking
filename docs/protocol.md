@@ -108,7 +108,7 @@ Periodic heartbeat, every 60 s. Describes the node, not a weight change, so the 
 
 ## Clock
 
-The node has no NTP: it sets its clock from the `Date` header of every `200` response to this endpoint, which the API must send. Until the first response after boot, events carry `t_ms: null` and the API dates them from `uptime_ms`. The header has one-second precision, which is enough for drinks.
+The node has no NTP: it sets its clock from the `Date` header of API responses, which the API must send. After a boot, before sending its queue, the node makes one `GET /api/v1/settings` just to read that header, then fills in `t_ms` for every queued event of the current boot. Only events from an earlier boot that never got a clock are sent with `t_ms: null`; the API dates those from `uptime_ms` or the receive time. The header has one-second precision, which is enough for drinks.
 
 ## Response
 

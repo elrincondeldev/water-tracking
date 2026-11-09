@@ -77,6 +77,25 @@ void test_wall_clock_needs_a_sync() {
   TEST_ASSERT_EQUAL_UINT64(1794225605000ULL, *clock.at(65000));
 }
 
+void test_fills_in_time_for_events_of_this_boot() {
+  WallClock clock;
+  const std::string unsynced = R"({"seq":50,"type":"placed","t_ms":null,"uptime_ms":4396,"weight_g":1325.5})";
+  assertStrings(unsynced, withKnownTime(unsynced, 40, clock));
+  clock.sync(1794262175806ULL, 4396);
+  assertStrings(
+      R"({"seq":50,"type":"placed","t_ms":1794262175806,"uptime_ms":4396,"weight_g":1325.5})",
+      withKnownTime(unsynced, 40, clock));
+}
+
+void test_leaves_earlier_boots_and_known_times_alone() {
+  WallClock clock;
+  clock.sync(1794262175806ULL, 4396);
+  const std::string earlier = R"({"seq":39,"type":"removed","t_ms":null,"uptime_ms":900000})";
+  const std::string known = R"({"seq":51,"type":"removed","t_ms":1794262170000,"uptime_ms":1})";
+  assertStrings(earlier, withKnownTime(earlier, 40, clock));
+  assertStrings(known, withKnownTime(known, 40, clock));
+}
+
 }  // namespace
 
 void setUp() {}
@@ -92,5 +111,7 @@ int main() {
   RUN_TEST(test_parses_http_dates);
   RUN_TEST(test_backoff_doubles_up_to_a_minute);
   RUN_TEST(test_wall_clock_needs_a_sync);
+  RUN_TEST(test_fills_in_time_for_events_of_this_boot);
+  RUN_TEST(test_leaves_earlier_boots_and_known_times_alone);
   return UNITY_END();
 }
