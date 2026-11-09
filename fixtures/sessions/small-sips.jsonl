@@ -1,0 +1,15 @@
+{"seq":1,"type":"placed","t_ms":1794225606000,"uptime_ms":6000,"weight_g":1531}
+{"seq":2,"type":"status","t_ms":1794225660000,"uptime_ms":60000,"weight_g":1531,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":3,"type":"status","t_ms":1794225720000,"uptime_ms":120000,"weight_g":1531,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":4,"type":"status","t_ms":1794225780000,"uptime_ms":180000,"weight_g":1531,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":5,"type":"status","t_ms":1794225840000,"uptime_ms":240000,"weight_g":1531,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":6,"type":"status","t_ms":1794225900000,"uptime_ms":300000,"weight_g":1531,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":7,"type":"removed","t_ms":1794225906000,"uptime_ms":306000}
+{"seq":8,"type":"placed","t_ms":1794225911000,"uptime_ms":311000,"weight_g":1527.8}
+{"seq":9,"type":"status","t_ms":1794225960000,"uptime_ms":360000,"weight_g":1527.8,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":10,"type":"status","t_ms":1794226020000,"uptime_ms":420000,"weight_g":1527.8,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":11,"type":"status","t_ms":1794226080000,"uptime_ms":480000,"weight_g":1527.8,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":12,"type":"status","t_ms":1794226140000,"uptime_ms":540000,"weight_g":1527.8,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":13,"type":"status","t_ms":1794226200000,"uptime_ms":600000,"weight_g":1527.8,"stable":true,"present":true,"calibrated":true,"rssi_dbm":-58,"queued":0}
+{"seq":14,"type":"removed","t_ms":1794226211000,"uptime_ms":611000}
+{"seq":15,"type":"placed","t_ms":1794226216000,"uptime_ms":616000,"weight_g":1524.9}

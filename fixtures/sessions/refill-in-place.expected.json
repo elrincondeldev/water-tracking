@@ -1,0 +1,14 @@
+{
+  "intakes": [
+    {
+      "seq": 7,
+      "kind": "refill",
+      "volume_ml": 731
+    },
+    {
+      "seq": 15,
+      "kind": "sip",
+      "volume_ml": 230
+    }
+  ]
+}

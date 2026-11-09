@@ -66,8 +66,8 @@ API side (domain logic, pure and unit-tested):
 - Rise ≥ 5 g → **refill** (not counted).
 - Drop > 600 g → **unclassified**: stays `pending` and is shown in the web app to confirm as drink or discard.
 - Change < 5 g → no event.
-- The new weight becomes the baseline.
-- A **bottle reset** clears the baseline: the next placement starts counting from scratch without producing an intake.
+- When a sip, refill or unclassified drop is recorded, the new weight becomes the baseline. Smaller changes keep the old baseline, so small sips add up.
+- A **bottle reset** restarts counting without producing an intake: the bottle on the plate becomes the baseline, or, if the plate is empty, the next placement does.
 - Raw node events are stored append-only. Intakes are derived and can be recomputed from raw events plus user corrections.
 
 Thresholds live in one config module in each side and are covered by tests using recorded sessions.
