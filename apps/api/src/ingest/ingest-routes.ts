@@ -8,9 +8,15 @@ import {
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import type { Db } from "../db/open-database";
 import { deviceAuth } from "../http/device-auth";
+import type { LiveUpdates } from "../stream/live-updates";
 import { ingestBatch } from "./ingest-batch";
 
-export type IngestRoutesOptions = { db: Db; deviceToken: string; now: () => Date };
+export type IngestRoutesOptions = {
+  db: Db;
+  deviceToken: string;
+  now: () => Date;
+  live: LiveUpdates;
+};
 
 export const ingestRoutes: FastifyPluginAsyncZod<IngestRoutesOptions> = async (app, options) => {
   app.post(
@@ -23,10 +29,12 @@ export const ingestRoutes: FastifyPluginAsyncZod<IngestRoutesOptions> = async (a
       },
     },
     async (request) => {
-      const { accepted_seq, gaps } = ingestBatch(options.db, request.body, options.now());
+      const { accepted_seq, gaps, intakes } = ingestBatch(options.db, request.body, options.now());
       for (const gap of gaps) {
         request.log.warn({ device_id: request.body.device_id, ...gap }, "missing node events");
       }
+      options.live.publishDevice();
+      options.live.publishIntakes(intakes);
       return { v: NODE_PROTOCOL_VERSION, accepted_seq } satisfies NodeEventBatchAck;
     },
   );
