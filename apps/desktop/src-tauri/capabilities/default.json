@@ -3,5 +3,5 @@
   "identifier": "default",
   "description": "Popover window",
   "windows": ["popover"],
-  "permissions": ["core:default", "core:tray:allow-set-title"]
+  "permissions": ["core:default", "core:tray:allow-set-title", "notification:default"]
 }
