@@ -77,7 +77,7 @@ Thresholds live in one config module in each side and are covered by tests using
 ### 5.1 Node (firmware)
 
 - PlatformIO, pioarduino platform (Arduino-ESP32 3.x), HX711 (bogde), ArduinoJson.
-- Wi-Fi station + NTP. Events carry Unix time in ms when synced, plus `uptime_ms` and a monotonically increasing `seq` persisted across reboots.
+- Wi-Fi station. The clock is set from the `Date` header of API responses (no NTP: that would be a call to a third-party service). Events carry Unix time in ms when synced, plus `uptime_ms` and a monotonically increasing `seq` persisted across reboots.
 - Sends events to the API over HTTP with a per-device bearer token.
 - Offline queue in LittleFS. Events are delivered in order and are idempotent by `(device_id, seq)`. Nothing is lost when the API or Wi-Fi is down.
 - Serial console (115200) for diagnostics, tare, calibration and Wi-Fi/API configuration. Credentials never live in the source tree.
@@ -186,7 +186,7 @@ Done when: replaying the recorded sessions produces exactly the expected sips/re
 ### Phase 3: firmware node
 
 - PlatformIO project ported from the prototype, in English.
-- Wi-Fi, NTP, event reporting, offline queue, serial configuration.
+- Wi-Fi, clock from the API, event reporting, offline queue, serial configuration.
 - Delete the Arduino IDE prototypes.
 
 Done when: real drinks appear in the API within seconds, and events produced while the API is stopped arrive in order after it restarts.
