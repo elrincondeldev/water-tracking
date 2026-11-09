@@ -1,4 +1,5 @@
 export * from "./bottle";
+export * from "./device";
 export * from "./goal";
 export * from "./intake";
 export * from "./node-protocol";
