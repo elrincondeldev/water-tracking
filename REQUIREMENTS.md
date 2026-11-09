@@ -202,7 +202,7 @@ Done when: every action in section 5.3 works against the API with the real node 
 
 - Tauri popover, menu bar progress, reminders, launch at login.
 
-Done when: the app shows live progress, sends a reminder after the configured idle time during active hours and stays silent during quiet hours.
+Done when: the app shows live progress, sends a reminder after the configured idle time during active hours and stays silent during quiet hours. ✅
 
 ### Phase 6: hardening
 
