@@ -21,7 +21,7 @@ export function IntakeRow({
 }) {
   const muted = intake.kind === "refill" || intake.status === "discarded";
   return (
-    <li className="flex items-center gap-4 py-3">
+    <li className="flex flex-wrap items-center gap-x-4 gap-y-1 py-3">
       <time className="w-12 text-sm text-muted tabular-nums" dateTime={intake.occurred_at}>
         {formatTime(intake.occurred_at, timezone)}
       </time>
@@ -36,7 +36,7 @@ export function IntakeRow({
       </span>
       <span
         className={cx(
-          "text-sm tabular-nums",
+          "text-sm whitespace-nowrap tabular-nums",
           muted ? "text-muted" : "font-medium",
           intake.status === "discarded" && "line-through",
         )}
@@ -44,7 +44,7 @@ export function IntakeRow({
         {intake.kind === "refill" ? "+" : ""}
         {formatMl(intake.volume_ml)}
       </span>
-      {actions}
+      {actions && <span className="flex w-full justify-end sm:w-auto">{actions}</span>}
     </li>
   );
 }
