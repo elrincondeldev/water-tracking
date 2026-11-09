@@ -7,13 +7,13 @@ import * as schema from "./schema";
 export type Db = BetterSQLite3Database<typeof schema>;
 export type DbOrTx = Db | Parameters<Parameters<Db["transaction"]>[0]>[0];
 
-const MIGRATIONS_DIR = fileURLToPath(new URL("../../drizzle", import.meta.url));
+const DEFAULT_MIGRATIONS_DIR = fileURLToPath(new URL("../../drizzle", import.meta.url));
 
-export function openDatabase(path: string): Db {
+export function openDatabase(path: string, migrationsDir = DEFAULT_MIGRATIONS_DIR): Db {
   const sqlite = new Database(path);
   sqlite.pragma("journal_mode = WAL");
   sqlite.pragma("foreign_keys = ON");
   const db = drizzle(sqlite, { schema });
-  migrate(db, { migrationsFolder: MIGRATIONS_DIR });
+  migrate(db, { migrationsFolder: migrationsDir });
   return db;
 }

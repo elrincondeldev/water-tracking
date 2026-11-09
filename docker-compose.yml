@@ -1,0 +1,15 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      GOTA_DEVICE_TOKEN: ${GOTA_DEVICE_TOKEN:?set GOTA_DEVICE_TOKEN in .env}
+    ports:
+      - "3000:3000"
+    volumes:
+      - gota-data:/data
+    restart: unless-stopped
+
+volumes:
+  gota-data:
