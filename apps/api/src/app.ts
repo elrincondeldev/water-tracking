@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
+import { bottleRoutes } from "./bottle/bottle-routes";
 import type { Db } from "./db/open-database";
 import { deviceRoutes } from "./device/device-routes";
 import { goalRoutes } from "./goal/goal-routes";
@@ -33,5 +34,6 @@ export function buildApp({ db, deviceToken, now = () => new Date(), logger = fal
   app.register(goalRoutes, { prefix, db, now });
   app.register(settingsRoutes, { prefix, db });
   app.register(intakeRoutes, { prefix, db, now });
+  app.register(bottleRoutes, { prefix, db, now });
   return app;
 }
