@@ -16,4 +16,9 @@ describe("rebaseSession", () => {
       { seq: 102, type: "placed", t_ms: 1_800_000_038_000, uptime_ms: 44000, weight_g: 1400 },
     ]);
   });
+
+  it("compresses time for fast replays", () => {
+    const rebased = rebaseSession(events, { seqStart: 1, startMs: 0, timeScale: 0.1 });
+    expect(rebased.map((e) => e.t_ms)).toEqual([null, 3000, 3800]);
+  });
 });
