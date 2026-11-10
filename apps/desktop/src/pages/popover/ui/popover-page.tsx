@@ -1,7 +1,9 @@
-import { cx, formatAgo, formatMl, formatTime, WaterDrop } from "@gota/ui";
+import { Button, cx, formatAgo, formatMl, formatTime, WaterDrop } from "@gota/ui";
+import { useState } from "react";
 import { useDevice } from "@/entities/device";
 import { useTodayIntakes } from "@/entities/intake";
 import { useTodaySummary } from "@/entities/summary";
+import { AppSettings } from "@/features/configure-app";
 import { SnoozeReminders } from "@/features/snooze-reminders";
 import { useNow } from "@/shared/lib";
 
@@ -12,11 +14,26 @@ export function PopoverPage({ live }: { live: boolean }) {
   const device = useDevice();
   const intakes = useTodayIntakes(summary.data?.date);
   const now = useNow();
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
+  if (settingsOpen) {
+    return (
+      <main className="flex h-dvh flex-col gap-5 p-5">
+        <h1 className="text-sm font-semibold">Settings</h1>
+        <AppSettings onDone={() => setSettingsOpen(false)} />
+      </main>
+    );
+  }
 
   if (!summary.data) {
     return (
-      <main className="grid h-dvh place-items-center p-6 text-center text-sm text-muted">
+      <main className="flex h-dvh flex-col items-center justify-center gap-4 p-6 text-center text-sm text-muted">
         {summary.isError ? "Can't reach the Gota API." : "Loading…"}
+        {summary.isError && (
+          <Button variant="secondary" onClick={() => setSettingsOpen(true)}>
+            Check the address
+          </Button>
+        )}
       </main>
     );
   }
@@ -28,6 +45,8 @@ export function PopoverPage({ live }: { live: boolean }) {
     .toReversed()
     .slice(0, RECENT_SIPS);
   const online = device.data?.online ?? false;
+  const stale = !live && summary.isError;
+  const updatedAt = new Date(summary.dataUpdatedAt).toISOString();
 
   return (
     <main className="flex h-dvh flex-col gap-5 p-5">
@@ -36,13 +55,27 @@ export function PopoverPage({ live }: { live: boolean }) {
         <span className="flex items-center gap-1.5">
           <span
             aria-hidden
-            className={cx("size-2 rounded-full", online ? "bg-accent" : "bg-muted/50")}
+            className={cx("size-2 rounded-full", online && !stale ? "bg-accent" : "bg-muted/50")}
           />
-          {!live ? "Reconnecting…" : online ? "Coaster online" : "Coaster offline"}
+          {stale
+            ? `Offline · updated ${formatTime(updatedAt, data.timezone)}`
+            : !live
+              ? "Reconnecting…"
+              : online
+                ? "Coaster online"
+                : "Coaster offline"}
+          <button
+            type="button"
+            aria-label="Settings"
+            onClick={() => setSettingsOpen(true)}
+            className="ml-1 rounded-full px-1.5 text-base leading-none hover:text-text focus-visible:outline-2 focus-visible:outline-accent"
+          >
+            ⚙︎
+          </button>
         </span>
       </header>
 
-      <section className="flex items-center gap-5">
+      <section className={cx("flex items-center gap-5", stale && "opacity-60")}>
         <div className="h-28 w-24 shrink-0" role="img" aria-label={`${percent}% of today's goal`}>
           <WaterDrop progress={data.progress} />
         </div>
