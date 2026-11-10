@@ -24,3 +24,4 @@ apps/desktop/src-tauri/target/
 .DS_Store
 
 .local/
+apps/desktop/src-tauri/gen/
