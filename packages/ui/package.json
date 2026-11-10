@@ -16,5 +16,8 @@
   },
   "peerDependencies": {
     "react": "^19"
+  },
+  "dependencies": {
+    "motion": "^14"
   }
 }

@@ -87,6 +87,9 @@ importers:
       '@tauri-apps/plugin-positioner':
         specifier: ^2
         version: 2.4.0
+      motion:
+        specifier: ^14
+        version: 14.11.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react:
         specifier: ^19
         version: 19.3.1
@@ -206,6 +209,10 @@ importers:
         version: 4.6.7
 
   packages/ui:
+    dependencies:
+      motion:
+        specifier: ^14
+        version: 14.11.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
     devDependencies:
       '@types/react':
         specifier: ^19

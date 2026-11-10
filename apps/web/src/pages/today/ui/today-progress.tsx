@@ -1,6 +1,6 @@
 import type { TodaySummary } from "@gota/contracts";
+import { WaterDrop } from "@gota/ui";
 import { formatMl } from "@/shared/lib";
-import { WaterDrop } from "./water-drop";
 
 export function TodayProgress({ summary }: { summary: TodaySummary }) {
   const percent = Math.round(summary.progress * 100);
