@@ -14,6 +14,9 @@ export const streamRoutes: FastifyPluginAsync<{ live: LiveUpdates }> = async (ap
   app.get("/stream", (request, reply) => {
     reply.hijack();
     const response = reply.raw;
+    for (const [name, value] of Object.entries(reply.getHeaders())) {
+      if (value !== undefined) response.setHeader(name, value);
+    }
     response.writeHead(200, {
       "content-type": "text/event-stream",
       "cache-control": "no-cache",
