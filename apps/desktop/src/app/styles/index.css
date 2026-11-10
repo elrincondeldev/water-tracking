@@ -2,8 +2,29 @@
 @import "@gota/ui/tokens.css";
 @source "../../../../../packages/ui/src";
 
+@theme inline {
+  --color-pane: var(--desktop-pane);
+  --color-pane-line: var(--desktop-pane-line);
+}
+
+:root {
+  --desktop-pane: rgb(255 255 255 / 0.62);
+  --desktop-pane-line: rgb(15 23 42 / 0.07);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --desktop-pane: rgb(255 255 255 / 0.06);
+    --desktop-pane-line: rgb(255 255 255 / 0.07);
+  }
+}
+
 @layer base {
   html {
-    @apply bg-surface font-sans text-text antialiased select-none;
+    @apply bg-surface font-sans text-[13px] text-text antialiased select-none;
+  }
+
+  html[data-shell="tauri"] {
+    @apply bg-transparent;
   }
 }
