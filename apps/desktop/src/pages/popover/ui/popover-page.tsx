@@ -2,6 +2,7 @@ import { cx, formatAgo, formatMl, formatTime, WaterDrop } from "@gota/ui";
 import { useDevice } from "@/entities/device";
 import { useTodayIntakes } from "@/entities/intake";
 import { useTodaySummary } from "@/entities/summary";
+import { SnoozeReminders } from "@/features/snooze-reminders";
 import { useNow } from "@/shared/lib";
 
 const RECENT_SIPS = 4;
@@ -77,6 +78,10 @@ export function PopoverPage({ live }: { live: boolean }) {
           </ul>
         )}
       </section>
+
+      <footer className="border-t border-line pt-3">
+        <SnoozeReminders timezone={data.timezone} now={now} />
+      </footer>
     </main>
   );
 }
